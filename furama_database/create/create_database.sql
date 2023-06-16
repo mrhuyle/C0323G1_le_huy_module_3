@@ -43,15 +43,16 @@ CREATE TABLE customer_type (
 
 CREATE TABLE customer (
     customer_code INT NOT NULL PRIMARY KEY,
-    customer_type INT,
-    FOREIGN KEY (customer_type)
-        REFERENCES customer_type (customer_type_code),
     customer_name VARCHAR(45) NOT NULL,
     customer_dob DATE NOT NULL,
     customer_gender BIT(1) NOT NULL,
     customer_id VARCHAR(45) NOT NULL,
+    customer_phone VARCHAR(45) NOT NULL,
     customer_email VARCHAR(45),
-    customer_address VARCHAR(45)
+    customer_address VARCHAR(45),
+	customer_type INT,
+    FOREIGN KEY (customer_type)
+        REFERENCES customer_type (customer_type_code)
 );
 
 CREATE TABLE rent_type (
@@ -70,16 +71,16 @@ CREATE TABLE service (
     service_area INT,
     service_fee DOUBLE NOT NULL,
     service_occupancy INT,
+    service_standard VARCHAR(45),
+    service_another_description VARCHAR(45),
+    service_pool_area DOUBLE,
+    service_floor_number INT,
     rent_type_code INT,
     FOREIGN KEY (rent_type_code)
         REFERENCES rent_type (rent_type_code),
     service_type_code INT,
     FOREIGN KEY (service_type_code)
-        REFERENCES service_type (service_type_code),
-    service_standard VARCHAR(45),
-    service_another_description VARCHAR(45),
-    service_pool_area DOUBLE,
-    service_floor_number INT
+        REFERENCES service_type (service_type_code)
 );
 
 CREATE TABLE additional_service (
@@ -94,6 +95,7 @@ CREATE TABLE contract (
     contract_code INT NOT NULL PRIMARY KEY,
     contract_signed_date DATETIME NOT NULL,
     contract_end_date DATETIME NOT NULL,
+    contract_deposit DOUBLE NOT NULL,
     employee_code INT,
     FOREIGN KEY (employee_code)
         REFERENCES employee (employee_code),
@@ -107,12 +109,12 @@ CREATE TABLE contract (
 
 CREATE TABLE details_contract (
     details_contract_code INT NOT NULL PRIMARY KEY,
+	details_contract_quantity INT NOT NULL,
     contract_code INT,
     FOREIGN KEY (contract_code)
         REFERENCES contract (contract_code),
     additional_service_code INT,
     FOREIGN KEY (additional_service_code)
-        REFERENCES additional_service (additional_service_code),
-    details_contract_quantity INT NOT NULL
+        REFERENCES additional_service (additional_service_code)
 );
 
