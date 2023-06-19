@@ -3,21 +3,24 @@ USE furama_database;
 -- 6. Hiển thị ma_dich_vu, ten_dich_vu, dien_tich, chi_phi_thue, ten_loai_dich_vu 
 -- của tất cả các loại dịch vụ chưa từng được khách hàng thực hiện đặt từ quý 1 của năm 2021 (Quý 1 là tháng 1, 2, 3).
 
-SELECT service.service_code, service.service_name, service.service_area, service.service_fee, service_type.service_type_name
+SELECT 	service.service_code, 
+		service.service_name, 
+		service.service_area, 
+        service.service_fee, 
+        service_type.service_type_name
 FROM service
 LEFT JOIN contract ON service.service_code = contract.service_code
 LEFT JOIN service_type ON service.service_type_code = service_type.service_type_code
-WHERE contract.contract_signed_date IS NULL 
-OR contract.contract_signed_date
-NOT BETWEEN '2021-01-01' AND '2021-03-31'
-AND service.service_code NOT IN (SELECT service_code FROM contract WHERE contract_signed_date BETWEEN '2021-01-01' AND '2021-03-31')
+WHERE service.service_code 
+NOT IN (
+		SELECT service_code FROM contract WHERE contract_signed_date BETWEEN '2021-01-01' AND '2021-03-31')
 GROUP BY service.service_code;
 
 -- 7. Hiển thị thông tin ma_dich_vu, ten_dich_vu, dien_tich, so_nguoi_toi_da, chi_phi_thue, ten_loai_dich_vu 
 -- của tất cả các loại dịch vụ đã từng được khách hàng đặt phòng trong năm 2020 
 -- nhưng chưa từng được khách hàng đặt phòng trong năm 2021.
 
-SELECT service.service_code, service.service_name, service.service_area, service.service_occupancy, service.service_fee, service_type.service_type_name, contract.contract_signed_date
+SELECT service.service_code, service.service_name, service.service_area, service.service_occupancy, service.service_fee, service_type.service_type_name
 FROM service
 LEFT JOIN contract ON service.service_code = contract.service_code
 LEFT JOIN service_type ON service.service_type_code = service_type.service_type_code
@@ -26,13 +29,18 @@ WHERE YEAR(contract.contract_signed_date) = 2020
     SELECT contract.service_code
     FROM contract
     WHERE YEAR(contract.contract_signed_date) = 2021
-  );
+  )
+  GROUP BY service.service_code;
   
 -- 8. Hiển thị thông tin ho_ten khách hàng có trong hệ thống, với yêu cầu ho_ten không trùng nhau.
 -- Học viên sử dụng theo 3 cách khác nhau để thực hiện yêu cầu trên.
 
 SELECT DISTINCT customer_name
 FROM customer;
+
+SELECT customer_name
+FROM customer
+GROUP BY customer_name;
 
 -- 9. Thực hiện thống kê doanh thu theo tháng, 
 -- nghĩa là tương ứng với mỗi tháng trong năm 2021 thì sẽ có bao nhiêu khách hàng thực hiện đặt phòng.
@@ -55,5 +63,5 @@ GROUP BY
 
 SELECT contract.contract_code, contract.contract_signed_date, contract.contract_end_date, contract.contract_deposit, SUM(details_contract.details_contract_quantity) AS number_of_additional_service
 FROM contract
-RIGHT JOIN details_contract ON contract.contract_code = details_contract.contract_code
+LEFT JOIN details_contract ON contract.contract_code = details_contract.contract_code
 GROUP BY contract.contract_code;
