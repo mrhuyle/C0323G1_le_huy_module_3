@@ -3,13 +3,15 @@ USE furama_database;
 -- 6. Hiển thị ma_dich_vu, ten_dich_vu, dien_tich, chi_phi_thue, ten_loai_dich_vu 
 -- của tất cả các loại dịch vụ chưa từng được khách hàng thực hiện đặt từ quý 1 của năm 2021 (Quý 1 là tháng 1, 2, 3).
 
-SELECT service.service_code, service.service_name, service.service_area, service.service_fee, service_type.service_type_name, contract.contract_signed_date
+SELECT service.service_code, service.service_name, service.service_area, service.service_fee, service_type.service_type_name
 FROM service
 LEFT JOIN contract ON service.service_code = contract.service_code
 LEFT JOIN service_type ON service.service_type_code = service_type.service_type_code
 WHERE contract.contract_signed_date IS NULL 
 OR contract.contract_signed_date
-NOT BETWEEN '2021-01-01' AND '2021-03-31';
+NOT BETWEEN '2021-01-01' AND '2021-03-31'
+AND service.service_code NOT IN (SELECT service_code FROM contract WHERE contract_signed_date BETWEEN '2021-01-01' AND '2021-03-31')
+GROUP BY service.service_code;
 
 -- 7. Hiển thị thông tin ma_dich_vu, ten_dich_vu, dien_tich, so_nguoi_toi_da, chi_phi_thue, ten_loai_dich_vu 
 -- của tất cả các loại dịch vụ đã từng được khách hàng đặt phòng trong năm 2020 
