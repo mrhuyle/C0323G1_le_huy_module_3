@@ -42,6 +42,12 @@ SELECT customer_name
 FROM customer
 GROUP BY customer_name;
 
+SELECT customer_name
+FROM customer
+UNION
+SELECT customer_name
+FROM customer;
+
 -- 9. Thực hiện thống kê doanh thu theo tháng, 
 -- nghĩa là tương ứng với mỗi tháng trong năm 2021 thì sẽ có bao nhiêu khách hàng thực hiện đặt phòng.
 
@@ -60,7 +66,6 @@ GROUP BY
     
 -- 10. Hiển thị thông tin tương ứng với từng hợp đồng thì đã sử dụng bao nhiêu dịch vụ đi kèm. 
 -- Kết quả hiển thị bao gồm ma_hop_dong, ngay_lam_hop_dong, ngay_ket_thuc, tien_dat_coc, so_luong_dich_vu_di_kem (được tính dựa trên việc sum so_luong ở dich_vu_di_kem).
-
 SELECT contract.contract_code, contract.contract_signed_date, contract.contract_end_date, contract.contract_deposit, SUM(details_contract.details_contract_quantity) AS number_of_additional_service
 FROM contract
 LEFT JOIN details_contract ON contract.contract_code = details_contract.contract_code
