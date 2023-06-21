@@ -70,8 +70,25 @@ GROUP BY	contract.customer_code;
 
 -- 19. Cập nhật giá cho các dịch vụ đi kèm được sử dụng trên 10 lần trong năm 2020 lên gấp đôi.
 
-SELECT		details_contract.additional_service_code,
-            additional_service.additional_service_name
+UPDATE additional_service
+SET additional_service_price = additional_service_price * 2
+WHERE additional_service_code IN (
+    SELECT temp.additional_service_code
+    FROM (
+        SELECT dc.additional_service_code
+        FROM (
+            SELECT c.contract_code AS code
+            FROM contract c
+            WHERE YEAR(c.contract_end_date) = 2020
+        ) abc
+        LEFT JOIN details_contract dc ON abc.code = dc.contract_code
+        GROUP BY dc.additional_service_code
+        HAVING SUM(dc.details_contract_quantity) > 10
+    ) temp
+);
+
+
+SELECT		details_contract.additional_service_code
 FROM		(SELECT		contract.contract_code as code
 			FROM		contract
 			WHERE		YEAR(contract_end_date) = 2020) abc
