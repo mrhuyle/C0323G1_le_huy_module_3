@@ -87,7 +87,6 @@ WHERE additional_service_code IN (
     ) temp
 );
 
-
 SELECT		details_contract.additional_service_code
 FROM		(SELECT		contract.contract_code as code
 			FROM		contract
