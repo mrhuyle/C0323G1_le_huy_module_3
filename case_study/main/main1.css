@@ -1,0 +1,81 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: black;
+}
+/* css header */
+.hearder {
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #333;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 98.9%;
+}
+.hearder img {
+  width: 4rem;
+}
+.container {
+}
+.hearder a {
+  color: #fff;
+}
+a {
+  text-decoration: none;
+}
+/* banner */
+.banner img {
+  width: 100%;
+  height: 80%;
+  /* max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px; */
+}
+.CONNECTING,
+.Bully {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  color: #fff;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.CONNECTING .item-left {
+  padding-left: 10rem;
+}
+.CONNECTING .item-right {
+  padding-top: 15rem;
+}
+.Bully img,
+.CONNECTING img {
+  width: 100%;
+}
+.Bully .item-left {
+  padding-top: 15rem;
+}
+
+/* .OUR-EVENTS,
+.press {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.OUR-EVENTS img {
+  width: 100%;
+}
+.press {
+  margin-top: 4rem;
+}
+.press img {
+  width: 100%;
+}
+.btn-OUR-EVENTS {
+  text-align: center;
+  margin-top: 4rem;
+}
+.btn-OUR-EVENTS a {
+  padding: 1rem;
+  background-color: #333;
+  border: solid 2px #14a59c;
+  color: #fff;
+} */
