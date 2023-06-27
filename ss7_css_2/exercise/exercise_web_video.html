@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Toon</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #b2b2b2;
+            margin: 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+        }
+
+        header {
+            display: flex;
+            background-color: #464646;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        #img {
+            text-align: center;
+            grid-column: span 2;
+        }
+
+        #welcome {
+            color: cornsilk;
+            font-weight: bold;
+            font-family: "Droid Sans Mono";
+            font-size: 40px;
+            grid-column: 3/span 10;
+            padding-left: 20px;
+            margin: 0;
+            text-align: left;
+        }
+
+        header div img {
+            width: 100%;
+        }
+
+        #welcome:hover {
+            color: white;
+        }
+
+        header:hover {
+            background-color: black;
+        }
+
+        main div.left {
+            grid-column: span 5;
+            border: 1px solid black;
+        }
+
+        main div.right {
+            grid-column: 6/ span 7;
+            border: 1px solid black;
+        }
+
+        footer div {
+            font-size: 30px;
+            font-family: "Apple Braille";
+            text-shadow: black;
+            color: #b2b2b2;
+            grid-column: span 12;
+            background-color: black;
+            text-align: center;
+        }
+
+        main div.left {
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+        }
+
+        .vid {
+            text-align: center;
+            margin: 10px;
+        }
+
+        main div.right {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .mainvid {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .text {
+            font-size: 30px;
+            text-align: center;
+            margin: 10px;
+        }
+
+        footer div:hover {
+            background-color: #464646;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<header class="grid">
+    <div id="img"><img src="Film.png" alt="Logo"></div>
+    <div id="welcome">Welcome To C03 Studio</div>
+</header>
+<main class="grid">
+    <div class="left">
+        <div class="vid">
+            <iframe width="70%" height="300px" src="https://www.youtube.com/embed/SgmNxE9lWcY"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+        </div>
+        <div class="vid">
+            <iframe width="70%" height="300px" src="https://www.youtube.com/embed/1Rs2ND1ryYc"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+        </div>
+        <div class="vid">
+            <iframe width="70%" height="300px" src="https://www.youtube.com/embed/-IAypuhKgJs"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="right">
+        <div class="mainvid">
+            <iframe width="90%" height="500px" src="https://www.youtube.com/embed/EiNiSFIPIQE"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+        </div>
+        <div class="text">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci architecto commodi debitis dolorem
+            doloremque eius error impedit in, mollitia possimus quam quo, ratione sed voluptatem. Iusto natus officia
+            perferendis?
+        </div>
+
+    </div>
+</main>
+<footer class="grid">
+    <div>Design by Mrhuyle</div>
+</footer>
+</body>
+</html>
