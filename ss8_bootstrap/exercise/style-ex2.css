@@ -1,13 +1,14 @@
 body {
     background-color: white;
     font-family: Arial;
+    margin: 0;
 }
 
 div.navbar {
     height: auto;
 }
 
-.top_surface{
+.top_surface {
     font-size: 15px;
     color: black;
     text-decoration: none;
@@ -36,48 +37,49 @@ div.navbar {
     text-decoration: underline;
     cursor: pointer;
 }
+
 .nav-item:hover {
     text-decoration: underline;
 }
+
 #shop_deal {
-     text-decoration: none;
-     color: black;
- }
+    text-decoration: none;
+    color: black;
+}
 
- #shop_deal:hover {
-     text-decoration: underline;
- }
+#shop_deal:hover {
+    text-decoration: underline;
+}
 
- .banner {
-     position: relative;
- }
+.banner {
+    position: relative;
+}
 
- .banner-text {
-     position: absolute;
- }
+.banner-text {
+    position: absolute;
+    width: 45%;
+}
+.list {
+    height: auto;
+}
+.animation {
+    background-color: #dcdcdc;
+}
 
- .animation {
-     background-color: #dcdcdc;
- }
- .arrow {
-     display: inline-block;
-     transition: padding-left 0.3s ease-in-out;
- }
+.arrow {
+    transition: padding-left 0.3s ease-in-out;
+}
 
- .arrow1:hover {
-     margin-left: 1em;
- }
-.arrow2:hover {
-    margin-left: 1em;
+.arrow:hover {
+    padding-left: 1em;
 }
 
 .item {
     color: blue;
 }
 
-.list {
-    height: auto;
-}
+
+
 
 
 
