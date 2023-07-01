@@ -1,6 +1,6 @@
 package com.example.simple_dictionary;
 
-import javax.servlet.*;
+import  javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;

@@ -21,12 +21,19 @@ public class DiscountServlet extends HttpServlet {
 
         float result = (price * (1 + (percent * 1 / 100)));
 
-        PrintWriter writer = response.getWriter();
-        writer.println("<html>");
-        writer.println("<h1>Description: " + description + "</h1>");
-        writer.println("<h1>Price: " + price + "</h1>");
-        writer.println("<h1>Discount Percent: " + percent + "</h1>");
-        writer.println("<h1>After discount price: " + result + "</h1>");
-        writer.println("</html>");
+//        PrintWriter writer = response.getWriter();
+//        writer.println("<html>");
+//        writer.println("<h1>Description: " + description + "</h1>");
+//        writer.println("<h1>Price: " + price + "</h1>");
+//        writer.println("<h1>Discount Percent: " + percent + "</h1>");
+//        writer.println("<h1>After discount price: " + result + "</h1>");
+//        writer.println("</html>");
+        request.setAttribute("description", description);
+        request.setAttribute("price", price);
+        request.setAttribute("percent", percent);
+        request.setAttribute("result", result);
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/result.jsp");
+        dispatcher.forward(request, response);
     }
 }
