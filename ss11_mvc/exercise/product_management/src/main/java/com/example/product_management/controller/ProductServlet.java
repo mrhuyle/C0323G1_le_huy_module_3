@@ -28,9 +28,53 @@ public class ProductServlet extends HttpServlet {
             case "edit":
                 showEditForm(request, response);
                 break;
+            case "delete":
+                showDeleteForm(request, response);
+                break;
+            case "view":
+                viewProduct(request, response);
+                break;
             default:
                 displayProducts(request, response);
                 break;
+        }
+    }
+
+    private void viewProduct(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Product product = productService.findById(id);
+        RequestDispatcher dispatcher;
+        if (product == null) {
+            dispatcher = request.getRequestDispatcher("product/error.jsp");
+        } else {
+            request.setAttribute("product", product);
+            dispatcher = request.getRequestDispatcher("product/view.jsp");
+            try {
+                dispatcher.forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Product product = productService.findById(id);
+        RequestDispatcher dispatcher;
+        if (product == null) {
+            dispatcher = request.getRequestDispatcher("product/error.jsp");
+        } else {
+            request.setAttribute("product", product);
+            dispatcher = request.getRequestDispatcher("product/delete.jsp");
+        }
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -92,9 +136,45 @@ public class ProductServlet extends HttpServlet {
             case "edit":
                 editProduct(request, response);
                 break;
+            case "delete":
+                deleteProduct(request, response);
+                break;
+            case "search":
+                searchByName(request, response);
+                break;
             default:
                 displayProducts(request, response);
                 break;
+        }
+    }
+
+    private void searchByName(HttpServletRequest request, HttpServletResponse response) {
+        String searchStr = request.getParameter("searchStr");
+        List<Product> products = productService.searchByName(searchStr);
+        RequestDispatcher dispatcher;
+        if (products.isEmpty()) {
+            dispatcher = request.getRequestDispatcher("product/search_not_found.jsp");
+        } else {
+            request.setAttribute("products", products);
+            request.setAttribute("searchStr", searchStr);
+            dispatcher = request.getRequestDispatcher("product/search_result.jsp");
+        }
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        productService.deleteProduct(id);
+        try {
+            response.sendRedirect("/ProductServlet?msg=" + URLEncoder.encode("delete successfully", "UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -105,9 +185,9 @@ public class ProductServlet extends HttpServlet {
         String description = request.getParameter("description");
         String brand = request.getParameter("brand");
         Product product = new Product(id, name, price, description, brand);
-        productService.editProduct(id,product);
+        productService.editProduct(id, product);
         try {
-            response.sendRedirect("/ProductServlet?msg=" + URLEncoder.encode("edit successfully","UTF-8"));
+            response.sendRedirect("/ProductServlet?msg=" + URLEncoder.encode("edit successfully", "UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }

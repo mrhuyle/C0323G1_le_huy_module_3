@@ -28,4 +28,15 @@ public class ProductService implements IProductService {
     public void editProduct(int id, Product product) {
         productRepository.editProduct(id, product);
     }
+
+    @Override
+    public void deleteProduct(int id) {
+        productRepository.deleteProduct(id);
+    }
+
+    @Override
+    public List<Product> searchByName(String searchStr) {
+        return productRepository.searchByName(searchStr);
+    }
+
 }

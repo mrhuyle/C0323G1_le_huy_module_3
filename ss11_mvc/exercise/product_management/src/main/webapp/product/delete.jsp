@@ -2,19 +2,19 @@
   Created by IntelliJ IDEA.
   User: lehuy
   Date: 03/07/2023
-  Time: 20:40
+  Time: 22:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Edit Product</title>
+    <title>Delete Product</title>
 </head>
 <body>
-<h1>Do you want to edit the product below? </h1>
-<form method="post" action="/ProductServlet?action=edit">
+<h1>Do you want to delete the product below?</h1>
+<form action="/ProductServlet?action=delete" method="post">
     <fieldset>
-        <legend>Edit Product Information</legend>
+        <legend>Delete Product Information</legend>
         <table>
             <tr>
                 <td>Id:</td>
@@ -37,13 +37,13 @@
                 <td><input type="text" name="brand" id="brand" value="${requestScope["product"].getBrand()}"></td>
             </tr>
             <tr>
-                <td colspan="2"><input type="submit" value="Submit Edit Customer"></td>
+                <td colspan="2"><input type="submit" value="Submit Delete Customer"></td>
             </tr>
         </table>
     </fieldset>
 </form>
 <p>
-    <a href="/ProductServlet">Back to main menu</a>
+    <a href="/ProductServlet">Back to Main menu</a>
 </p>
 </body>
 </html>

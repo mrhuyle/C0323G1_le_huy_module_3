@@ -2,10 +2,7 @@ package com.example.product_management.repository;
 
 import com.example.product_management.model.Product;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ProductRepository implements IProductRepository{
     private static Map<Integer,Product> productList;
@@ -36,5 +33,21 @@ public class ProductRepository implements IProductRepository{
     @Override
     public void editProduct(int id, Product product) {
         productList.replace(id,product);
+    }
+
+    @Override
+    public void deleteProduct(int id) {
+        productList.remove(id);
+    }
+
+    @Override
+    public List<Product> searchByName(String searchStr) {
+        List<Product> products = new ArrayList<>();
+        for (Product product: productList.values()) {
+            if (product.getName().toLowerCase().contains(searchStr.trim().toLowerCase())) {
+                products.add(product);
+            }
+        }
+        return products;
     }
 }

@@ -31,6 +31,10 @@
 <body>
 <h1>List of Products</h1>
 <h1><a href="/ProductServlet?action=create" class="btn btn-primary">Create new Product</a></h1>
+<form action="/ProductServlet?action=search" method="post">
+    <input type="text" name="searchStr" id="searchStr" placeholder="Search By Name">
+    <input type="submit" value="Search By Name" class="btn btn-danger">
+</form>
 <table>
     <thead>
     <th>Name</th>
@@ -53,9 +57,11 @@
         </tr>
     </c:forEach>
 </table>
-<c:if test="${msg != null}">
-    <c:out value="${msg}"/>
-</c:if>
+<p style="color: red; font-weight: bold">
+    <c:if test="${msg != null}">
+        <c:out value="${msg}"/>
+    </c:if>
+</p>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
