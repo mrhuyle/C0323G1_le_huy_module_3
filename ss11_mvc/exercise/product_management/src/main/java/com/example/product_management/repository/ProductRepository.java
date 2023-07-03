@@ -27,4 +27,14 @@ public class ProductRepository implements IProductRepository{
     public void add(Product product) {
         productList.put(product.getId(),product);
     }
+
+    @Override
+    public Product findById(int id) {
+        return productList.get(id);
+    }
+
+    @Override
+    public void editProduct(int id, Product product) {
+        productList.replace(id,product);
+    }
 }

@@ -36,7 +36,21 @@ public class ProductServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        
+        Product product = productService.findById(id);
+        RequestDispatcher dispatcher;
+        if (product == null) {
+            dispatcher = request.getRequestDispatcher("product/error.jsp");
+        } else {
+            request.setAttribute("product", product);
+            dispatcher = request.getRequestDispatcher("product/edit.jsp");
+        }
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) {
@@ -75,10 +89,29 @@ public class ProductServlet extends HttpServlet {
             case "create":
                 createProduct(request, response);
                 break;
+            case "edit":
+                editProduct(request, response);
+                break;
             default:
                 displayProducts(request, response);
                 break;
         }
+    }
+
+    private void editProduct(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        Double price = Double.parseDouble(request.getParameter("price"));
+        String description = request.getParameter("description");
+        String brand = request.getParameter("brand");
+        Product product = new Product(id, name, price, description, brand);
+        productService.editProduct(id,product);
+        try {
+            response.sendRedirect("/ProductServlet?msg=" + URLEncoder.encode("edit successfully","UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void createProduct(HttpServletRequest request, HttpServletResponse response) {
