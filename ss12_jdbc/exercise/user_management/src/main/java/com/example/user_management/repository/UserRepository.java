@@ -14,6 +14,8 @@ public class UserRepository implements IUserRepository {
     //MySQL URL:
     private static final String SELECT_ALL_USERS = "SELECT * FROM users;";
     private static final String INSERT_USER = "INSERT INTO users (name, email, country) VALUES (?,?,?);";
+    private static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?;";
+    private static final String UPDATE_USER = "update users set name = ?,email= ?, country =? where id = ?;";
 
     @Override
     public List<User> selectAllUsers() {
@@ -46,7 +48,7 @@ public class UserRepository implements IUserRepository {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER);
             preparedStatement.setString(1, newUser.getName());
-            preparedStatement.setString(2,newUser.getEmail());
+            preparedStatement.setString(2, newUser.getEmail());
             preparedStatement.setString(3, newUser.getCountry());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -54,8 +56,46 @@ public class UserRepository implements IUserRepository {
         }
     }
 
+    @Override
+    public User selectUser(int id) {
+       User user = null;
+       Connection connection = BaseRepository.getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            preparedStatement.setInt(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String country = resultSet.getString("country");
+                user = new User(id, name, email, country);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 
-    //Method:
-
+    @Override
+    public boolean updateUser(User updatedUser) {
+        boolean rowUpdated;
+        Connection connection = BaseRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER);
+            preparedStatement.setString(1,updatedUser.getName());
+            preparedStatement.setString(2,updatedUser.getEmail());
+            preparedStatement.setString(3,updatedUser.getCountry());
+            preparedStatement.setInt(4,updatedUser.getId());
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rowUpdated;
+    }
 
 }

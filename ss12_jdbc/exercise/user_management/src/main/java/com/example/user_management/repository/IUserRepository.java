@@ -8,4 +8,8 @@ public interface IUserRepository {
     List<User> selectAllUsers();
 
     void insertUser(User newUser);
+
+    User selectUser(int id);
+
+    boolean updateUser (User updatedUser);
 }

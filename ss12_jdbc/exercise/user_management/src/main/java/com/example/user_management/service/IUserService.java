@@ -8,4 +8,8 @@ public interface IUserService {
     List<User> selectAllUsers();
 
     void insertUser(User newUser);
+
+    User selectUser(int id);
+
+    void updateUser(User updatedUser);
 }

@@ -18,4 +18,14 @@ public class UserService implements IUserService {
     public void insertUser(User newUser) {
         userRepository.insertUser(newUser);
     }
+
+    @Override
+    public User selectUser(int id) {
+        return userRepository.selectUser(id);
+    }
+
+    @Override
+    public void updateUser(User updatedUser) {
+        userRepository.updateUser(updatedUser);
+    }
 }
