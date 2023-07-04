@@ -33,9 +33,32 @@ public class UserServlet extends HttpServlet {
                 case "edit":
                     updateUser(request, response);
                     break;
+                case "search":
+                    searchByCountry(request, response);
+                    break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
+        }
+    }
+
+    private void searchByCountry(HttpServletRequest request, HttpServletResponse response) {
+        String searchCountry = request.getParameter("searchCountry");
+        List<User> list = userDAO.findByCountry(searchCountry);
+        RequestDispatcher dispatcher;
+        if (list.isEmpty()) {
+            dispatcher = request.getRequestDispatcher("user/error.jsp");
+        } else {
+            request.setAttribute("searchCountry", searchCountry);
+            request.setAttribute("list", list);
+            dispatcher = request.getRequestDispatcher("user/search_result.jsp");
+        }
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -57,12 +80,33 @@ public class UserServlet extends HttpServlet {
                 case "delete":
                     deleteUser(request, response);
                     break;
+                case "sort":
+                    sortByName(request, response);
+                    break;
                 default:
                     listUser(request, response);
                     break;
             }
         } catch (SQLException ex) {
             throw new ServletException(ex);
+        }
+    }
+
+    private void sortByName(HttpServletRequest request, HttpServletResponse response) {
+        List<User> list = userDAO.sortByName();
+        RequestDispatcher dispatcher;
+        if (list.isEmpty()) {
+            dispatcher = request.getRequestDispatcher("user/error.jsp");
+        } else {
+            request.setAttribute("listUser", list);
+            dispatcher = request.getRequestDispatcher("user/list.jsp");
+        }
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

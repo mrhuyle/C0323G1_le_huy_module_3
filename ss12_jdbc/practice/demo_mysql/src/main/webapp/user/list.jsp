@@ -17,6 +17,10 @@
     <h1>User Management</h1>
     <h2>
         <a href="/users?action=create">Add New User</a>
+        <br>
+        <a href="/users?action=sort">Sort users by name</a>
+        <br>
+        <a href="/users">Restore main list</a>
     </h2>
 </center>
 <div align="center">
@@ -42,6 +46,11 @@
             </tr>
         </c:forEach>
     </table>
+    <br>
+    <form action="/users?action=search" method="post">
+        <input type="text" name="searchCountry" id="searchCountry">
+        <input type="submit" value="Search By Country">
+    </form>
 </div>
 </body>
 </html>
