@@ -133,7 +133,7 @@ public class UserDAO implements IUserDAO{
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_COUNTRY);
             String str = "%" + searchCountry.trim() + "%";
             preparedStatement.setString(1, str);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery(); //Create records
 
             while(resultSet.next()) {
                 int id = resultSet.getInt("id");
