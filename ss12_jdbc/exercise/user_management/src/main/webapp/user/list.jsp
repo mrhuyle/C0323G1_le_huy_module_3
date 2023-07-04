@@ -18,7 +18,7 @@
     <fieldset>
         <legend>Function</legend>
         <h2>
-            <a href="/users?action=create">Add New User</a>
+            <a href="/users?action=create">Create New User</a>
         </h2>
     </fieldset>
 </center>

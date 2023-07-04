@@ -12,7 +12,8 @@ import java.util.List;
 public class UserRepository implements IUserRepository {
     private static BaseRepository baseRepository = new BaseRepository();
     //MySQL URL:
-    private static final String SELECT_ALL_USERS = "SELECT * FROM users";
+    private static final String SELECT_ALL_USERS = "SELECT * FROM users;";
+    private static final String INSERT_USER = "INSERT INTO users (name, email, country) VALUES (?,?,?);";
 
     @Override
     public List<User> selectAllUsers() {
@@ -37,6 +38,20 @@ public class UserRepository implements IUserRepository {
             e.printStackTrace();
         }
         return users;
+    }
+
+    @Override
+    public void insertUser(User newUser) {
+        Connection connection = BaseRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER);
+            preparedStatement.setString(1, newUser.getName());
+            preparedStatement.setString(2,newUser.getEmail());
+            preparedStatement.setString(3, newUser.getCountry());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

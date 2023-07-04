@@ -23,10 +23,22 @@ public class UserServlet extends HttpServlet {
         }
         switch (action) {
             case "create":
+                showCreateForm(request, response);
                 break;
             default:
                 listUser(request, response);
                 break;
+        }
+    }
+
+    private void showCreateForm(HttpServletRequest request, HttpServletResponse response) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/create.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -50,6 +62,30 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "create":
+                insertUser(request,response);
+                break;
+        }
+    }
 
+    private void insertUser(HttpServletRequest request, HttpServletResponse response) {
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String country = request.getParameter("country");
+        User newUser = new User(name, email, country);
+        userService.insertUser(newUser);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/create.jsp");
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -13,4 +13,9 @@ public class UserService implements IUserService {
     public List<User> selectAllUsers() {
        return userRepository.selectAllUsers();
     }
+
+    @Override
+    public void insertUser(User newUser) {
+        userRepository.insertUser(newUser);
+    }
 }
