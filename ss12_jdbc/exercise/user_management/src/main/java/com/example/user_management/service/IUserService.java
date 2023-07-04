@@ -12,4 +12,6 @@ public interface IUserService {
     User selectUser(int id);
 
     void updateUser(User updatedUser);
+
+    void deleteUser(int id);
 }

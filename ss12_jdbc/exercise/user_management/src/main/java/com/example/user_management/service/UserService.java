@@ -28,4 +28,9 @@ public class UserService implements IUserService {
     public void updateUser(User updatedUser) {
         userRepository.updateUser(updatedUser);
     }
+
+    @Override
+    public void deleteUser(int id) {
+        userRepository.deleteUser(id);
+    }
 }

@@ -15,7 +15,8 @@ public class UserRepository implements IUserRepository {
     private static final String SELECT_ALL_USERS = "SELECT * FROM users;";
     private static final String INSERT_USER = "INSERT INTO users (name, email, country) VALUES (?,?,?);";
     private static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?;";
-    private static final String UPDATE_USER = "update users set name = ?,email= ?, country =? where id = ?;";
+    private static final String UPDATE_USER = "UPDATE users SET name = ?,email= ?, country =? WHERE id = ?;";
+    private static final String DELETE_USER = "DELETE FROM users WHERE id = ?;";
 
     @Override
     public List<User> selectAllUsers() {
@@ -58,8 +59,8 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public User selectUser(int id) {
-       User user = null;
-       Connection connection = BaseRepository.getConnection();
+        User user = null;
+        Connection connection = BaseRepository.getConnection();
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);
@@ -67,7 +68,7 @@ public class UserRepository implements IUserRepository {
             e.printStackTrace();
         }
         try {
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
@@ -87,15 +88,29 @@ public class UserRepository implements IUserRepository {
         Connection connection = BaseRepository.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER);
-            preparedStatement.setString(1,updatedUser.getName());
-            preparedStatement.setString(2,updatedUser.getEmail());
-            preparedStatement.setString(3,updatedUser.getCountry());
-            preparedStatement.setInt(4,updatedUser.getId());
+            preparedStatement.setString(1, updatedUser.getName());
+            preparedStatement.setString(2, updatedUser.getEmail());
+            preparedStatement.setString(3, updatedUser.getCountry());
+            preparedStatement.setInt(4, updatedUser.getId());
             rowUpdated = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return rowUpdated;
+    }
+
+    @Override
+    public boolean deleteUser(int id) {
+        boolean rowDeleted = false;
+        Connection connection = BaseRepository.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER);
+            preparedStatement.setInt(1, id);
+            rowDeleted = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rowDeleted;
     }
 
 }

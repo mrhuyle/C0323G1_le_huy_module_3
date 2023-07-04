@@ -12,4 +12,6 @@ public interface IUserRepository {
     User selectUser(int id);
 
     boolean updateUser (User updatedUser);
+
+    boolean deleteUser(int id);
 }
