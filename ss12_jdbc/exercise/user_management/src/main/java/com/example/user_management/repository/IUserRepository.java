@@ -11,7 +11,11 @@ public interface IUserRepository {
 
     User selectUser(int id);
 
-    boolean updateUser (User updatedUser);
+    boolean updateUser(User updatedUser);
 
     boolean deleteUser(int id);
+
+    List<User> searchByCountry(String searchStr);
+
+    List<User> sortByName();
 }

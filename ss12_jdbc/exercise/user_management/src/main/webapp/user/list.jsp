@@ -11,6 +11,13 @@
 <html>
 <head>
     <title>User Management Application</title>
+    <style>
+        input {
+            font-size: 20px;
+            font-weight: bold;
+            color: blue;
+        }
+    </style>
 </head>
 <body>
 <center>
@@ -20,6 +27,26 @@
         <h2>
             <a href="/users?action=create">Create New User</a>
         </h2>
+        <h2>
+            <form action="/users?action=search" method="post">
+                <input type="text" name="searchStr" id="searchStr" placeholder="Search By Country">
+                <input type="submit" value="Search By Country">
+            </form>
+        </h2>
+        <c:choose>
+            <c:when test="${restore == null}">
+                <h2>
+                    <a href="/users?action=sort">Sort By Name (Ascending)</a>
+                </h2>
+            </c:when>
+            <c:otherwise>
+                <h2>
+                    <a href="/users">${restore}</a>
+                </h2>
+            </c:otherwise>
+
+        </c:choose>
+
     </fieldset>
 </center>
 <div align="center">

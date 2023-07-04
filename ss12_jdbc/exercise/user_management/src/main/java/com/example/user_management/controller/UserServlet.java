@@ -8,6 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.List;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/users")
@@ -30,9 +31,31 @@ public class UserServlet extends HttpServlet {
             case "delete":
                 deleteUser(request, response);
                 break;
+            case "sort":
+                sortByName(request,response);
+                break;
             default:
                 listUser(request, response);
                 break;
+        }
+    }
+
+    private void sortByName(HttpServletRequest request, HttpServletResponse response) {
+        List<User> list = userService.sortByName();
+        RequestDispatcher dispatcher;
+        if (list.isEmpty()) {
+            dispatcher = request.getRequestDispatcher("user/error.jsp");
+        } else {
+            dispatcher = request.getRequestDispatcher("user/list.jsp");
+            request.setAttribute("listUser",list);
+            request.setAttribute("restore","Restore to the origin list");
+        }
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -113,7 +136,29 @@ public class UserServlet extends HttpServlet {
             case "edit":
                 updateUser(request, response);
                 break;
+            case "search":
+                searchByCountry(request, response);
+                break;
+        }
+    }
 
+    private void searchByCountry(HttpServletRequest request, HttpServletResponse response) {
+        String searchStr = request.getParameter("searchStr");
+        List<User> list = userService.searchByCountry(searchStr);
+        RequestDispatcher dispatcher;
+        if (list.isEmpty()) {
+            dispatcher = request.getRequestDispatcher("user/error.jsp");
+        } else {
+            dispatcher = request.getRequestDispatcher("user/search_result.jsp");
+            request.setAttribute("searchStr", searchStr);
+            request.setAttribute("list", list);
+        }
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

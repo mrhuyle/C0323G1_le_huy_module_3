@@ -14,4 +14,8 @@ public interface IUserService {
     void updateUser(User updatedUser);
 
     void deleteUser(int id);
+
+    List<User> searchByCountry(String searchStr);
+
+    List<User> sortByName();
 }

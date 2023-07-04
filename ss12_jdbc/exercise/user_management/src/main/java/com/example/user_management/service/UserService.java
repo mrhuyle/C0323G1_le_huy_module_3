@@ -33,4 +33,14 @@ public class UserService implements IUserService {
     public void deleteUser(int id) {
         userRepository.deleteUser(id);
     }
+
+    @Override
+    public List<User> searchByCountry(String searchStr) {
+        return userRepository.searchByCountry(searchStr);
+    }
+
+    @Override
+    public List<User> sortByName() {
+        return userRepository.sortByName();
+    }
 }
