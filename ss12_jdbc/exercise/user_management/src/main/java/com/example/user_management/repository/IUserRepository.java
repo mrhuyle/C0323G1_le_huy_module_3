@@ -18,4 +18,12 @@ public interface IUserRepository {
     List<User> searchByCountry(String searchStr);
 
     List<User> sortByName();
+
+    User getUserById(int id);
+
+    void insertUserStore(User user);
+
+    List<User> selectAllStored ();
+    boolean updateUserStored(User updatedUser);
+    boolean deleteUserStored(int id);
 }

@@ -18,4 +18,12 @@ public interface IUserService {
     List<User> searchByCountry(String searchStr);
 
     List<User> sortByName();
+
+    User getUserById(int id);
+
+    void insertUserStore(User user);
+
+    List<User> selectAllStored();
+    void updateUserStored(User updatedUser);
+    void deleteUserStored(int id);
 }

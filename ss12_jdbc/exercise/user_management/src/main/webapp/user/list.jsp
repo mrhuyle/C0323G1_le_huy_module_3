@@ -44,7 +44,6 @@
                     <a href="/users">${restore}</a>
                 </h2>
             </c:otherwise>
-
         </c:choose>
 
     </fieldset>

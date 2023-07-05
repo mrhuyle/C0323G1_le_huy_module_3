@@ -32,7 +32,7 @@ public class UserServlet extends HttpServlet {
                 deleteUser(request, response);
                 break;
             case "sort":
-                sortByName(request,response);
+                sortByName(request, response);
                 break;
             default:
                 listUser(request, response);
@@ -47,11 +47,11 @@ public class UserServlet extends HttpServlet {
             dispatcher = request.getRequestDispatcher("user/error.jsp");
         } else {
             dispatcher = request.getRequestDispatcher("user/list.jsp");
-            request.setAttribute("listUser",list);
-            request.setAttribute("restore","Restore to the origin list");
+            request.setAttribute("listUser", list);
+            request.setAttribute("restore", "Restore to the origin list");
         }
         try {
-            dispatcher.forward(request,response);
+            dispatcher.forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -61,7 +61,8 @@ public class UserServlet extends HttpServlet {
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        userService.deleteUser(id);
+//        userService.deleteUser(id);
+        userService.deleteUserStored(id); //Callable
 
         List<User> listUser = userService.selectAllUsers();
         RequestDispatcher dispatcher;
@@ -82,7 +83,8 @@ public class UserServlet extends HttpServlet {
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        User user = userService.selectUser(id);
+//        User user = userService.selectUser(id);
+        User user = userService.getUserById(id); //CallableStatement
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/edit.jsp");
         request.setAttribute("user", user);
         try {
@@ -106,7 +108,10 @@ public class UserServlet extends HttpServlet {
     }
 
     private void listUser(HttpServletRequest request, HttpServletResponse response) {
-        List<User> listUser = userService.selectAllUsers();
+//        List<User> listUser = userService.selectAllUsers();
+        //Use Callable
+        List<User> listUser = userService.selectAllStored();
+
         RequestDispatcher dispatcher;
         if (listUser.isEmpty()) {
             dispatcher = request.getRequestDispatcher("user/error.jsp");
@@ -154,7 +159,7 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("list", list);
         }
         try {
-            dispatcher.forward(request,response);
+            dispatcher.forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -169,7 +174,8 @@ public class UserServlet extends HttpServlet {
         String country = request.getParameter("country");
 
         User updatedUser = new User(id, name, email, country);
-        userService.updateUser(updatedUser);
+//        userService.updateUser(updatedUser);
+        userService.updateUserStored(updatedUser); //Callable
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/edit.jsp");
         try {
             dispatcher.forward(request, response);
@@ -178,7 +184,6 @@ public class UserServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response) {
@@ -186,7 +191,8 @@ public class UserServlet extends HttpServlet {
         String email = request.getParameter("email");
         String country = request.getParameter("country");
         User newUser = new User(name, email, country);
-        userService.insertUser(newUser);
+//        userService.insertUser(newUser);
+        userService.insertUserStore(newUser); //CallableStatement
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/create.jsp");
         try {
             dispatcher.forward(request, response);

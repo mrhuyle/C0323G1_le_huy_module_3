@@ -11,7 +11,7 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> selectAllUsers() {
-       return userRepository.selectAllUsers();
+        return userRepository.selectAllUsers();
     }
 
     @Override
@@ -42,5 +42,30 @@ public class UserService implements IUserService {
     @Override
     public List<User> sortByName() {
         return userRepository.sortByName();
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return userRepository.getUserById(id);
+    }
+
+    @Override
+    public void insertUserStore(User user) {
+        userRepository.insertUserStore(user);
+    }
+
+    @Override
+    public List<User> selectAllStored() {
+        return userRepository.selectAllStored();
+    }
+
+    @Override
+    public void updateUserStored(User updatedUser) {
+        userRepository.updateUserStored(updatedUser);
+    }
+
+    @Override
+    public void deleteUserStored(int id) {
+        userRepository.deleteUserStored(id);
     }
 }
